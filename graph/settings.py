@@ -9,6 +9,7 @@
 
 BOT_NAME = 'graph'
 
+DNS_RESOLVER = 'scrapy.resolver.CachingHostnameResolver'
 LOG_LEVEL = 'INFO'
 LOG_FORMATTER = 'graph.formatter.LinkLogFormatter'
 
