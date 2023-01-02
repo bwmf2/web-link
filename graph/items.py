@@ -10,3 +10,8 @@ class GraphItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+
+class EdgeItem(scrapy.Item):
+    source = scrapy.Field()
+    target = scrapy.Field()

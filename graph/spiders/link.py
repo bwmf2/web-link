@@ -1,4 +1,6 @@
+from urllib.parse import urlparse
 import scrapy
+from graph.items import EdgeItem
 
 
 class LinkSpider(scrapy.Spider):
@@ -11,4 +13,29 @@ class LinkSpider(scrapy.Spider):
         self.data = data
 
     def parse(self, response):
-        pass
+        if self.data == 'hostname':
+            extract = lambda url: urlparse(url).hostname
+        elif self.data == 'domain':
+            extract = lambda url: urlparse(url).netloc
+        else:
+            raise ValueError(
+                'Unknown data requested: {}'.format(repr(self.data))
+            )
+
+        source = extract(response.url)
+        for next_page in response.xpath('//a/@href'):
+            try:
+                request = response.follow(next_page, self.parse)
+                request.meta['dont_redirect'] = True
+            except ValueError:
+                continue
+
+            target = extract(request.url)
+            if target in self.skips:
+                continue
+            yield request
+
+            item = EdgeItem()
+            item['source'] = source
+            item['target'] = target
+            yield item
