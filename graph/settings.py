@@ -9,6 +9,9 @@
 
 BOT_NAME = 'graph'
 
+LOG_LEVEL = 'INFO'
+LOG_FORMATTER = 'graph.formatter.LinkLogFormatter'
+
 SPIDER_MODULES = ['graph.spiders']
 NEWSPIDER_MODULE = 'graph.spiders'
 
