@@ -13,6 +13,9 @@ DNS_RESOLVER = 'scrapy.resolver.CachingHostnameResolver'
 LOG_LEVEL = 'INFO'
 LOG_FORMATTER = 'graph.formatter.LinkLogFormatter'
 
+LOCAL_DEPTH = '1'
+GLOBAL_DEPTH = '1'
+
 SPIDER_MODULES = ['graph.spiders']
 NEWSPIDER_MODULE = 'graph.spiders'
 
@@ -48,9 +51,11 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'graph.middlewares.GraphSpiderMiddleware': 543,
-#}
+SPIDER_MIDDLEWARES = {
+    # 'graph.middlewares.GraphSpiderMiddleware': 543,
+    'graph.middlewares.GlobalDepthMiddleware': 544,
+    'graph.middlewares.LocalDepthMiddleware': 545,
+}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
